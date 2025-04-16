@@ -1,8 +1,8 @@
 # Daily Run Report
-Generated on 2025-04-15 09:54:20
+Generated on 2025-04-16 22:34:07
 
 | Folder Name | Status     | Run Time (min) |
 |-------------|------------|----------------|
-| DAILY_2C_2025-04-14_22-11-24 | successful | 22.44 |
-| DAILY_1p5C_2025-04-14_21-48-03 | successful | 22.52 |
-| DAILY_NPi_2025-04-14_21-00-07 | successful | 47.12 |
+| DAILY_2C_2025-04-16_22-10-53 | successful | 22.41 |
+| DAILY_1p5C_2025-04-16_21-47-22 | successful | 22.68 |
+| DAILY_NPi_2025-04-16_21-00-23 | successful | 46.15 |
