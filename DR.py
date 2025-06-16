@@ -6,10 +6,10 @@ from datetime import datetime
 directory_path = r"C:\Users\Plessias\Desktop\Scheduled_OPEN-PROM\OPEN-PROM\runs"
 repo_path = r"C:\Users\Plessias\Reporting"  # Path to the local Git repo
 
-def get_last_3_folders(directory_path):
+def get_last_4_folders(directory_path):
     folders = [f.path for f in os.scandir(directory_path) if f.is_dir()]
     folders.sort(key=lambda x: os.path.getctime(x), reverse=True)
-    return folders[:3]
+    return folders[:4]
 
 def check_file_in_folder(folder_path):
     return os.path.exists(os.path.join(folder_path, "blabla.gdx"))
@@ -47,7 +47,7 @@ def commit_and_push():
         print(f"Git error: {e}")
 
 def main():
-    folders = get_last_3_folders(directory_path)
+    folders = get_last_4_folders(directory_path)
     folders_info = []
 
     for folder in folders:
