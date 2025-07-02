@@ -1,9 +1,9 @@
 # Daily Run Report
-Generated on 2025-07-01 09:49:50
+Generated on 2025-07-02 22:37:05
 
 | Folder Name | Status     | Run Time (min) |
 |-------------|------------|----------------|
-| DAILY_2C_2025-06-30_22-09-22 | successful | 22.41 |
-| DAILY_1p5C_2025-06-30_21-46-36 | successful | 22.2 |
-| DAILY_NoCarbonPrice_2025-06-30_21-24-30 | successful | 22.06 |
-| DAILY_NPi_2025-06-30_21-00-34 | successful | 23.36 |
+| DAILY_2C_2025-07-02_22-13-11 | successful | 23.89 |
+| DAILY_1p5C_2025-07-02_21-48-51 | successful | 23.98 |
+| DAILY_NoCarbonPrice_2025-07-02_21-25-21 | successful | 23.48 |
+| DAILY_NPi_2025-07-02_21-00-09 | successful | 24.81 |
