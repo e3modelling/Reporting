@@ -38,13 +38,41 @@ def write_readme(content):
         f.write(content)
 
 def commit_and_push():
+    log_file = os.path.join(repo_path, "git_log.txt")
+
+    def log(message):
+        with open(log_file, "a") as logf:
+            timestamp = datetime.now().strftime("[%Y-%m-%d %H:%M:%S]")
+            logf.write(f"{timestamp} {message}\n")
+
     try:
-        subprocess.run(["git", "add", "README.md"], cwd=repo_path, check=True)
-        subprocess.run(["git", "commit", "-m", "Update daily run report"], cwd=repo_path, check=True)
-        subprocess.run(["git", "push"], cwd=repo_path, check=True)
-        print("README.md committed and pushed successfully.")
+        if not os.path.isdir(os.path.join(repo_path, ".git")):
+            log("Error: Not a git repository.")
+            return
+
+        log("Staging README.md...")
+        result=subprocess.run(["git", "add", "README.md"], cwd=repo_path, check=True)
+        log(f"STDOUT: {result.stdout}")
+        log(f"STDERR: {result.stderr}")
+        
+        status = subprocess.run(["git", "status", "--porcelain"], cwd=repo_path, capture_output=True, text=True)
+        if status.stdout.strip() == "":
+            log("Nothing to commit.")
+            return
+
+        log("Committing changes...")
+        result=subprocess.run(["git", "commit", "-m", "Update daily run report"], cwd=repo_path, check=True)
+        log(f"STDOUT: {result.stdout}")
+        log(f"STDERR: {result.stderr}")
+
+        log("Pushing to origin...")
+        result=subprocess.run(["git", "push"], cwd=repo_path, check=True)
+        log(f"STDOUT: {result.stdout}")
+        log(f"STDERR: {result.stderr}")
+
+        log("Successfully committed and pushed README.md.")
     except subprocess.CalledProcessError as e:
-        print(f"Git error: {e}")
+        log(f"Git error: {e}")
 
 def main():
     folders = get_last_4_folders(directory_path)
