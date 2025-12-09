@@ -4,8 +4,8 @@ import sys
 from datetime import datetime
 
 # Define the directory path where the folders are located
-directory_path = r"C:\Users\Plessias\Desktop\Scheduled_OPEN-PROM\OPEN-PROM\runs"
-repo_path = r"C:\Users\Plessias\Reporting"  # Path to the local Git repo
+directory_path = r"C:\Models\OPEN-PROM\runs"
+repo_path = r"C:\Models\Reporting"  # Path to the local Git repository
 
 def get_last_4_folders(directory_path):
     folders = [f.path for f in os.scandir(directory_path) if f.is_dir()]
