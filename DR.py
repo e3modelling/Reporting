@@ -36,13 +36,21 @@ def check_calibration_status(folder_path):
         return "Failed"  # mainCalib.lst exists but fullCalib.log doesn't
     
     try:
-        with open(full_calib_path, 'r') as f:
-            content = f.read().strip()
-            if content.endswith("*** Status: Normal completion"):
+        with open(full_calib_path, 'r', encoding='utf-8', errors='ignore') as f:
+            lines = f.readlines()
+            
+        # Check the last 20 lines for the completion status
+        last_lines = lines[-20:] if len(lines) > 20 else lines
+        
+        for line in last_lines:
+            line_stripped = line.strip()
+            if "*** Status: Normal completion" in line_stripped:
                 return "Successful"
-            else:
-                return "Failed"
-    except Exception:
+                
+        return "Failed"
+        
+    except Exception as e:
+        print(f"Error reading calibration file {full_calib_path}: {e}")
         return "Failed"
 
 def is_daily_npi_folder(folder_name):
@@ -119,8 +127,8 @@ def main():
         status = "successful" if check_file_in_folder(folder) else "failed"
         run_time = calculate_run_time(folder)
         
-        # Check calibration status only for the first (most recent) folder if it's a DAILY_NPi_ folder
-        if i == 0 and is_daily_npi_folder(folder_name):
+        # Check calibration status for any DAILY_NPi_ folder
+        if is_daily_npi_folder(folder_name):
             calibration_status = check_calibration_status(folder)
             if calibration_status == "Failed":
                 calibration_failed = True
