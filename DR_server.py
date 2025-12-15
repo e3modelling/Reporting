@@ -19,6 +19,10 @@ def check_plot_pdf(folder_path):
     """Check if plot.pdf exists in the folder."""
     return "Yes" if os.path.exists(os.path.join(folder_path, "plot.pdf")) else "No"
 
+def check_reporting_mif(folder_path):
+    """Check if reporting.mif exists in the folder."""
+    return "Yes" if os.path.exists(os.path.join(folder_path, "reporting.mif")) else "No"
+
 def check_calibration_status(folder_path):
     """Check if calibration was successful for DAILY_NPi_ folders."""
     main_calib_path = os.path.join(folder_path, "mainCalib.lst")
@@ -32,13 +36,21 @@ def check_calibration_status(folder_path):
         return "Failed"  # mainCalib.lst exists but fullCalib.log doesn't
     
     try:
-        with open(full_calib_path, 'r') as f:
-            content = f.read().strip()
-            if content.endswith("*** Status: Normal completion"):
+        with open(full_calib_path, 'r', encoding='utf-8', errors='ignore') as f:
+            lines = f.readlines()
+            
+        # Check the last 20 lines for the completion status
+        last_lines = lines[-20:] if len(lines) > 20 else lines
+        
+        for line in last_lines:
+            line_stripped = line.strip()
+            if "*** Status: Normal completion" in line_stripped:
                 return "Successful"
-            else:
-                return "Failed"
-    except Exception:
+                
+        return "Failed"
+        
+    except Exception as e:
+        print(f"Error reading calibration file {full_calib_path}: {e}")
         return "Failed"
 
 def is_daily_npi_folder(folder_name):
@@ -56,11 +68,11 @@ def generate_markdown(folders_info):
         "# Daily Run Report",
         f"Generated on {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
         "",
-        "| Folder Name | Status     | Run Time (min) | Calibration | Plot PDF |",
-        "|-------------|------------|----------------|-------------|----------|"
+        "| Folder Name | Status     | Run Time (min) | Calibration | Plot.pdf | Reporting.mif |",
+        "|-------------|------------|----------------|-------------|----------|---------------|"
     ]
-    for folder_name, status, run_time, calibration, plot_pdf in folders_info:
-        lines.append(f"| {folder_name} | {status} | {run_time} | {calibration} | {plot_pdf} |")
+    for folder_name, status, run_time, calibration, plot_pdf, reporting_mif in folders_info:
+        lines.append(f"| {folder_name} | {status} | {run_time} | {calibration} | {plot_pdf} | {reporting_mif} |")
     return "\n".join(lines)
 
 def write_readme(content):
@@ -115,19 +127,22 @@ def main():
         status = "successful" if check_file_in_folder(folder) else "failed"
         run_time = calculate_run_time(folder)
         
-        # Check calibration status only for the first (most recent) folder if it's a DAILY_NPi_ folder
-        if i == 0 and is_daily_npi_folder(folder_name):
+        # Check calibration status for any DAILY_NPi_ folder
+        if is_daily_npi_folder(folder_name):
             calibration_status = check_calibration_status(folder)
             if calibration_status == "Failed":
                 calibration_failed = True
                 print(f"CRITICAL ERROR: Calibration failed for {folder_name}. Terminating process.")
         else:
-            calibration_status = "N/A"
+            calibration_status = "-"
         
         # Check for plot.pdf in all folders
         plot_pdf_status = check_plot_pdf(folder)
         
-        folders_info.append((folder_name, status, run_time, calibration_status, plot_pdf_status))
+        # Check for reporting.mif in all folders
+        reporting_mif_status = check_reporting_mif(folder)
+        
+        folders_info.append((folder_name, status, run_time, calibration_status, plot_pdf_status, reporting_mif_status))
 
     # If calibration failed, terminate the process before generating report
     if calibration_failed:
