@@ -19,6 +19,10 @@ def check_plot_pdf(folder_path):
     """Check if plot.pdf exists in the folder."""
     return "Yes" if os.path.exists(os.path.join(folder_path, "plot.pdf")) else "No"
 
+def check_reporting_mif(folder_path):
+    """Check if reporting.mif exists in the folder."""
+    return "Yes" if os.path.exists(os.path.join(folder_path, "reporting.mif")) else "No"
+
 def check_calibration_status(folder_path):
     """Check if calibration was successful for DAILY_NPi_ folders."""
     main_calib_path = os.path.join(folder_path, "mainCalib.lst")
@@ -56,11 +60,11 @@ def generate_markdown(folders_info):
         "# Daily Run Report",
         f"Generated on {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
         "",
-        "| Folder Name | Status     | Run Time (min) | Calibration | Plot PDF |",
-        "|-------------|------------|----------------|-------------|----------|"
+        "| Folder Name | Status     | Run Time (min) | Calibration | Plot.pdf | Reporting.mif |",
+        "|-------------|------------|----------------|-------------|----------|---------------|"
     ]
-    for folder_name, status, run_time, calibration, plot_pdf in folders_info:
-        lines.append(f"| {folder_name} | {status} | {run_time} | {calibration} | {plot_pdf} |")
+    for folder_name, status, run_time, calibration, plot_pdf, reporting_mif in folders_info:
+        lines.append(f"| {folder_name} | {status} | {run_time} | {calibration} | {plot_pdf} | {reporting_mif} |")
     return "\n".join(lines)
 
 def write_readme(content):
@@ -122,12 +126,15 @@ def main():
                 calibration_failed = True
                 print(f"CRITICAL ERROR: Calibration failed for {folder_name}. Terminating process.")
         else:
-            calibration_status = "N/A"
+            calibration_status = "-"
         
         # Check for plot.pdf in all folders
         plot_pdf_status = check_plot_pdf(folder)
         
-        folders_info.append((folder_name, status, run_time, calibration_status, plot_pdf_status))
+        # Check for reporting.mif in all folders
+        reporting_mif_status = check_reporting_mif(folder)
+        
+        folders_info.append((folder_name, status, run_time, calibration_status, plot_pdf_status, reporting_mif_status))
 
     # If calibration failed, terminate the process before generating report
     if calibration_failed:
