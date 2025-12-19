@@ -1,9 +1,9 @@
 # Daily Run Report
-Generated on 2025-12-17 22:13:55
+Generated on 2025-12-19 22:13:36
 
 | Folder Name | Status     | Run Time (min) | Calibration | Plot.pdf | Reporting.mif |
 |-------------|------------|----------------|-------------|----------|---------------|
-| DAILY_2C_2025-12-17_21-59-06 | successful | 14.8 | - | No | Yes |
-| DAILY_1p5C_2025-12-17_21-44-23 | successful | 14.7 | - | No | Yes |
-| DAILY_NoCarbonPrice_2025-12-17_21-30-19 | successful | 14.04 | - | No | Yes |
-| DAILY_NPi_2025-12-17_21-00-52 | successful | 29.42 | Successful | No | Yes |
+| DAILY_2C_2025-12-19_21-58-42 | successful | 14.89 | - | No | Yes |
+| DAILY_1p5C_2025-12-19_21-43-49 | successful | 14.85 | - | No | Yes |
+| DAILY_NoCarbonPrice_2025-12-19_21-29-45 | successful | 14.05 | - | No | Yes |
+| DAILY_NPi_2025-12-19_21-00-07 | successful | 29.59 | Successful | No | Yes |
