@@ -39,8 +39,8 @@ def check_calibration_status(folder_path):
         with open(full_calib_path, 'r', encoding='utf-8', errors='ignore') as f:
             lines = f.readlines()
             
-        # Check the last 20 lines for the completion status
-        last_lines = lines[-20:] if len(lines) > 20 else lines
+        # Check the last 50 lines for the completion status
+        last_lines = lines[-50:] if len(lines) > 50 else lines
         
         for line in last_lines:
             line_stripped = line.strip()
@@ -63,15 +63,26 @@ def calculate_run_time(folder_path):
     run_time_minutes = (last_mod_time - creation_time) / 60
     return round(run_time_minutes, 2)
 
-def generate_markdown(folders_info):
+def generate_markdown(folders_info, calibration_failed=False):
+    timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    if calibration_failed:
+        timestamp += " - CALIBRATION FAILED"
+    
     lines = [
         "# Daily Run Report",
-        f"Generated on {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
+        f"Generated on {timestamp}",
         "",
         "| Folder Name | Status     | Run Time (min) | Calibration | Plot.pdf | Reporting.mif |",
         "|-------------|------------|----------------|-------------|----------|---------------|"
     ]
     for folder_name, status, run_time, calibration, plot_pdf, reporting_mif in folders_info:
+        # If calibration failed, mark everything as Failed
+        if calibration_failed:
+            status = "Failed"
+            plot_pdf = "Failed"
+            reporting_mif = "Failed"
+            if calibration == "-":
+                calibration = "Failed"
         lines.append(f"| {folder_name} | {status} | {run_time} | {calibration} | {plot_pdf} | {reporting_mif} |")
     return "\n".join(lines)
 
@@ -144,14 +155,17 @@ def main():
         
         folders_info.append((folder_name, status, run_time, calibration_status, plot_pdf_status, reporting_mif_status))
 
-    # If calibration failed, terminate the process before generating report
+    # If calibration failed, still generate report but mark everything as failed
     if calibration_failed:
-        print("Process terminated due to calibration failure. Regular runs will not proceed.")
-        sys.exit(1)
+        print("CRITICAL: Calibration failure detected. Generating report with failed status.")
 
-    markdown_content = generate_markdown(folders_info)
+    markdown_content = generate_markdown(folders_info, calibration_failed)
     write_readme(markdown_content)
     commit_and_push()
+    
+    # Exit with error code if calibration failed
+    if calibration_failed:
+        sys.exit(1)
 
 if __name__ == "__main__":
     main()
