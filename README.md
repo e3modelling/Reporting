@@ -1,9 +1,9 @@
 # Daily Run Report
-Generated on 2026-05-22 21:00:21
+Generated on 2026-05-28 12:45:36
 
 | Folder Name | Status     | Run Time (min) | Calibration | Plot.pdf | Reporting.mif |
 |-------------|------------|----------------|-------------|----------|---------------|
-| DAILY_2C_2026-05-18_22-27-48 | successful | 18.85 | - | Yes | Yes |
-| DAILY_1p5C_2026-05-18_22-08-49 | successful | 18.93 | - | Yes | Yes |
-| DAILY_NoCarbonPrice_2026-05-18_21-50-01 | successful | 18.74 | - | Yes | Yes |
-| DAILY_NPi_2026-05-18_21-01-45 | successful | 48.19 | Successful | Yes | Yes |
+| DAILY_2C_2026-05-27_22-03-42 | successful | 18.36 | - | Yes | Yes |
+| DAILY_1p5C_2026-05-27_21-45-24 | successful | 18.3 | - | Yes | Yes |
+| DAILY_NPi_2026-05-27_21-27-08 | successful | 18.27 | N/A | Yes | Yes |
+| Corrected_RAM_Optimization_2026-05-27_21-01-08 | successful | 25.86 | - | No | No |
