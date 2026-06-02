@@ -57,6 +57,10 @@ def is_daily_npi_folder(folder_name):
     """Check if the folder name starts with DAILY_NPi_."""
     return folder_name.startswith("DAILY_NPi_")
 
+def is_scen_folder(folder_name):
+    """Check if the folder name is a calibration run (starts with SCEN_)."""
+    return folder_name.startswith("SCEN_")
+
 def calculate_run_time(folder_path):
     creation_time = os.path.getctime(folder_path)
     last_mod_time = os.path.getmtime(folder_path)
@@ -138,8 +142,8 @@ def main():
         status = "successful" if check_file_in_folder(folder) else "failed"
         run_time = calculate_run_time(folder)
         
-        # Check calibration status for any DAILY_NPi_ folder
-        if is_daily_npi_folder(folder_name):
+        # Check calibration status for SCEN_ folders (calibration now runs separately)
+        if is_scen_folder(folder_name):
             calibration_status = check_calibration_status(folder)
             if calibration_status == "Failed":
                 calibration_failed = True
@@ -147,11 +151,13 @@ def main():
         else:
             calibration_status = "-"
         
-        # Check for plot.pdf in all folders
-        plot_pdf_status = check_plot_pdf(folder)
-        
-        # Check for reporting.mif in all folders
-        reporting_mif_status = check_reporting_mif(folder)
+        # SCEN_ (calibration) folders don't produce plot.pdf or reporting.mif
+        if is_scen_folder(folder_name):
+            plot_pdf_status = "-"
+            reporting_mif_status = "-"
+        else:
+            plot_pdf_status = check_plot_pdf(folder)
+            reporting_mif_status = check_reporting_mif(folder)
         
         folders_info.append((folder_name, status, run_time, calibration_status, plot_pdf_status, reporting_mif_status))
 
