@@ -1,9 +1,9 @@
 # Daily Run Report
-Generated on 2026-06-02 12:45:16
+Generated on 2026-06-03 21:43:52 - CALIBRATION FAILED
 
 | Folder Name | Status     | Run Time (min) | Calibration | Plot.pdf | Reporting.mif |
 |-------------|------------|----------------|-------------|----------|---------------|
-| DAILY_2C_2026-06-01_22-01-35 | successful | 15.7 | - | No | No |
-| DAILY_1p5C_2026-06-01_21-45-55 | successful | 15.65 | - | No | No |
-| DAILY_NPi_2026-06-01_21-30-11 | successful | 15.74 | - | No | No |
-| SCEN_2026-06-01_21-01-11 | successful | 28.98 | Successful | - | - |
+| DAILY_2C_2026-06-03_21-43-37 | Failed | 0.25 | Failed | Failed | Failed |
+| DAILY_1p5C_2026-06-03_21-43-22 | Failed | 0.24 | Failed | Failed | Failed |
+| DAILY_NPi_2026-06-03_21-43-03 | Failed | 0.33 | Failed | Failed | Failed |
+| SCEN_2026-06-03_21-09-26 | Failed | 33.6 | Failed | Failed | Failed |
