@@ -72,10 +72,12 @@ def calibration_status(folder):
         return "Failed"
     try:
         with open(log, "r", encoding="utf-8", errors="ignore") as f:
-            tail = f.readlines()[-50:]
-        for line in tail:
-            if "*** Status: Normal completion" in line:
-                return "Successful"
+            content = f.read()
+        # Scan the WHOLE log for the completion line, not just the tail: GAMS
+        # often prints more output after it (solver summaries, file listings),
+        # so a tail-only window can scroll past it on a long run.
+        if "Normal completion" in content:
+            return "Successful"
         return "Failed"
     except OSError as e:
         print(f"Could not read {log}: {e}", file=sys.stderr)
