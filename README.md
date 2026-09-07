@@ -1,10 +1,10 @@
 # Daily Run Report
-Generated on 2026-09-05 08:38:56
+Generated on 2026-09-07 08:38:36
 
 **Environment:** mrprom / postprom install status unknown ❓
 
 | Folder Name | Status | Run Time (min) | Calibration | Plot.pdf | Reporting.mif |
 |-------------|--------|----------------|-------------|----------|---------------|
-| DAILY_2C_2026-09-05_08-17-52 | successful | 21.06 | - | Yes | Yes |
-| DAILY_1p5C_2026-09-05_07-56-39 | successful | 21.21 | - | Yes | Yes |
-| DAILY_NPi_2026-09-05_07-00-29 | successful | 56.16 | Successful | Yes | Yes |
+| DAILY_2C_2026-09-07_08-17-35 | successful | 21.02 | - | Yes | Yes |
+| DAILY_1p5C_2026-09-07_07-56-22 | successful | 21.2 | - | Yes | Yes |
+| DAILY_NPi_2026-09-07_07-00-37 | successful | 55.73 | Successful | Yes | Yes |
